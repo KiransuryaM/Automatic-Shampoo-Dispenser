@@ -1,0 +1,33 @@
+// C++ code
+#include <Servo.h>
+int distance,time = 0;
+Servo servo;
+void setup()
+{
+  pinMode(9, OUTPUT);
+  pinMode(10, INPUT);
+  Serial.begin(9600);
+  servo.attach(13);
+  servo.write(0);
+}
+
+void loop()
+{
+  digitalWrite(9,LOW);
+  delay(1000);
+  digitalWrite(9,HIGH);
+  delay(2000);
+  digitalWrite(9,LOW);
+  time = pulseIn(10,HIGH);
+  distance = (0.034*time)/2;
+  if(distance>=5&&distance<=10){
+        Serial.println("Collect shampoo");
+        servo.write(90);
+        delay(2000);
+        servo.write(0);
+  }
+  else {
+         Serial.println("Could not dispense shampoo");
+         servo.write(0);
+  }
+}
